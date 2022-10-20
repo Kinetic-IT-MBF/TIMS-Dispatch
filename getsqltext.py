@@ -1,5 +1,4 @@
-def get_timsmbfquery():
-	sql_command = '''SELECT    'TIMS MBF' as source_code,
+SELECT    'TIMS MBF' as source_code,
     rp.roster_plant_id,
     rp.roster_date,
     sh.shift_code,
@@ -40,9 +39,3 @@ WHERE cast(rp.roster_date as date) BETWEEN ''2022-01-31'' and cast(now() as date
        rp.day_type_code != ''ANL'')
   AND rp.day_type_code not like 'TRN%'
 ORDER BY sh.shift_code, rp.depart_time'''
-	
-	return sql_command
-
-
-x = get_timsmbfquery()
-print(x)
