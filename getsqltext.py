@@ -1,4 +1,5 @@
-SELECT    'TIMS MBF' as source_code,
+SELECT   
+    'TIMS MBF' as source_code,
     rp.roster_plant_id,
     rp.roster_date,
     sh.shift_code,
@@ -21,8 +22,8 @@ SELECT    'TIMS MBF' as source_code,
     rp.arrive_place,
     rp.trip_start_flag,
     CASE
-        WHEN arrive_date < depart_date THEN depart_date + interval ''1'' day
-        when arrive_date < depart_date and arrive_time < depart_time then arrive_date + interval ''1'' day
+        WHEN arrive_date < depart_date THEN depart_date + interval '1' day
+        when arrive_date < depart_date and arrive_time < depart_time then arrive_date + interval '1' day
         ELSE arrive_date
         END                         AS arrive_date,
     p.rego_number AS rego
@@ -31,11 +32,10 @@ LEFT JOIN plant p on p.company_id = rp.company_id and p.plant_id = rp.plant_id
 LEFT JOIN employeepersonall e on e.company_id = rp.company_id and e.employee_id = rp.employee_id
 LEFT JOIN shift_hdr sh ON sh.shift_hdr_id = rp.source_hdr_id and sh.company_id = rp.company_id
 left join bus_unit bu on bu.bus_unit_code = rp.bus_unit_code and bu.company_id = rp.company_id
---WHERE rp.roster_date BETWEEN (NOW() - INTERVAL ''21 days'')::date AND NOW()::date
 WHERE cast(rp.roster_date as date) BETWEEN ''2022-01-31'' and cast(now() as date)
-  AND trip_start_flag = ''Yes''
-  AND rp.employee_id > 0
-  AND (rp.day_type_code IN (SELECT dt.day_type_code FROM day_type dt WHERE dt.work_day_flag = 'Yes') AND
-       rp.day_type_code != ''ANL'')
-  AND rp.day_type_code not like 'TRN%'
-ORDER BY sh.shift_code, rp.depart_time'''
+AND trip_start_flag = Yes'
+AND rp.employee_id > 0
+AND (rp.day_type_code IN (SELECT dt.day_type_code FROM day_type dt WHERE dt.work_day_flag = 'Yes') 
+AND   rp.day_type_code != 'ANL')
+AND rp.day_type_code not like 'TRN%'
+ORDER BY sh.shift_code, rp.depart_time
