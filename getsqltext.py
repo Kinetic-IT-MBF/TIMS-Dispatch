@@ -32,7 +32,7 @@ LEFT JOIN plant p on p.company_id = rp.company_id and p.plant_id = rp.plant_id
 LEFT JOIN employeepersonall e on e.company_id = rp.company_id and e.employee_id = rp.employee_id
 LEFT JOIN shift_hdr sh ON sh.shift_hdr_id = rp.source_hdr_id and sh.company_id = rp.company_id
 left join bus_unit bu on bu.bus_unit_code = rp.bus_unit_code and bu.company_id = rp.company_id
-WHERE cast(rp.roster_date as date) BETWEEN ''2022-01-31'' and cast(now() as date)
+WHERE cast(rp.roster_date as date) BETWEEN  '2022-01-31' and cast(now() as date)
 AND trip_start_flag = Yes'
 AND rp.employee_id > 0
 AND (rp.day_type_code IN (SELECT dt.day_type_code FROM day_type dt WHERE dt.work_day_flag = 'Yes') 
